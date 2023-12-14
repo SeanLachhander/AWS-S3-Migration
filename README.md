@@ -35,4 +35,4 @@ Before using this script, ensure you have the following:
 Run the unit tests to verify the functionality:
 
 ```bash
-python your_test_script.py
+python migration.py
