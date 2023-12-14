@@ -59,7 +59,7 @@ class NFSMigrationAWS:
 
     def start_datasync_task(self, task_arn):
         """
-        Start the AWS DataSync task for migration.
+        Start the AWS DataSync task for migration and monitor the progress.
 
         Args:
         - task_arn (str): The DataSync task ARN (Amazon Resource Name).
@@ -67,14 +67,16 @@ class NFSMigrationAWS:
         Returns:
         - None
         """
-        if not self.datasync_client:
-            return
-
         try:
-            self.datasync_client.start_task_execution(
-                TaskArn=task_arn
-            )
+            self.datasync_client.start_task_execution(TaskArn=task_arn)
             print(f"DataSync task {task_arn} started.")
+            while True:
+                task_execution_response = self.datasync_client.describe_task_execution(TaskExecutionArn=task_arn)
+                status = task_execution_response['Status']
+                print(f"Status: {status}")
+                if status in ['SUCCESS', 'ERROR', 'FAILURE']:
+                    break
+                time.sleep(5)  # Wait for 5 seconds before checking status again
         except ClientError as e:
             print(f"Failed to start DataSync task: {str(e)}")
 
