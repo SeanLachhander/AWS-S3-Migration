@@ -15,8 +15,8 @@ Before using this script, ensure you have the following:
 1. Clone this repository:
 
     ```bash
-    git clone https://github.com/yourusername/your-repo.git
-    cd your-repo
+    git clone https://github.com/SeanLachhander/AWS-S3-Migration.git
+    cd AWS-S3-Migration
     ```
 
 2. Install required Python packages:
